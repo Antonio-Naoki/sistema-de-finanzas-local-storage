@@ -2050,10 +2050,10 @@ function DonutChart({ data, showBalance }: any) {
 
             return (
               <div key={index} className="flex items-center space-x-2">
-                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: color }}></div>
+                {/* <div className="w-3 h-3 rounded-full" style={{ backgroundColor: color }}></div>
                 <span className="text-xs text-slate-300">
                   {item.icon} {item.name}
-                </span>
+                </span> */}
               </div>
             )
           })}
