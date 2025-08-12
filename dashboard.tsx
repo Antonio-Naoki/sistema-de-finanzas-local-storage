@@ -293,7 +293,7 @@ export default function FinancialDashboard() {
 
   // Format currency
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-US", {
+    return new Intl.NumberFormat("es-ES", {
       style: "currency",
       currency: "USD",
     }).format(amount)
@@ -301,7 +301,7 @@ export default function FinancialDashboard() {
 
   // Format time
   const formatTime = (date: Date) => {
-    return date.toLocaleTimeString("en-US", {
+    return date.toLocaleTimeString("es-ES", {
       hour12: false,
       hour: "2-digit",
       minute: "2-digit",
@@ -311,7 +311,7 @@ export default function FinancialDashboard() {
 
   // Format date
   const formatDate = (date: Date) => {
-    return date.toLocaleDateString("en-US", {
+    return date.toLocaleDateString("es-ES", {
       year: "numeric",
       month: "short",
       day: "numeric",
@@ -415,53 +415,53 @@ export default function FinancialDashboard() {
     // Header
     pdf.setFontSize(20)
     pdf.setTextColor(0, 150, 200)
-    pdf.text("FINTECH OS - Financial Report", pageWidth / 2, 20, { align: "center" })
+    pdf.text("FINTECH OS - Reporte Financiero", pageWidth / 2, 20, { align: "center" })
 
     pdf.setFontSize(12)
     pdf.setTextColor(100, 100, 100)
-    pdf.text(`Generated on: ${formatDate(new Date())} ${formatTime(new Date())}`, pageWidth / 2, 30, {
+    pdf.text(`Generado el: ${formatDate(new Date())} ${formatTime(new Date())}`, pageWidth / 2, 30, {
       align: "center",
     })
 
     let yPosition = 50
 
-    // Financial Summary
+    // Resumen Financiero
     pdf.setFontSize(16)
     pdf.setTextColor(0, 0, 0)
-    pdf.text("Financial Summary", 20, yPosition)
+    pdf.text("Resumen Financiero", 20, yPosition)
     yPosition += 15
 
     pdf.setFontSize(12)
-    pdf.text(`Total Balance: ${formatCurrency(balance)}`, 20, yPosition)
+    pdf.text(`Balance Total: ${formatCurrency(balance)}`, 20, yPosition)
     yPosition += 8
-    pdf.text(`Total Income: ${formatCurrency(totalIncome)}`, 20, yPosition)
+    pdf.text(`Total Ingresos: ${formatCurrency(totalIncome)}`, 20, yPosition)
     yPosition += 8
-    pdf.text(`Total Expenses: ${formatCurrency(totalExpenses)}`, 20, yPosition)
+    pdf.text(`Total Gastos: ${formatCurrency(totalExpenses)}`, 20, yPosition)
     yPosition += 8
-    pdf.text(`Total Transactions: ${transactions.length}`, 20, yPosition)
+    pdf.text(`Total Transacciones: ${transactions.length}`, 20, yPosition)
     yPosition += 20
 
-    // Monthly Summary
+    // Resumen Mensual
     pdf.setFontSize(16)
     pdf.setTextColor(0, 0, 0)
-    pdf.text("Current Month Summary", 20, yPosition)
+    pdf.text("Resumen del Mes Actual", 20, yPosition)
     yPosition += 15
 
     pdf.setFontSize(12)
-    pdf.text(`Monthly Income: ${formatCurrency(monthlyIncome)}`, 20, yPosition)
+    pdf.text(`Ingresos del Mes: ${formatCurrency(monthlyIncome)}`, 20, yPosition)
     yPosition += 8
-    pdf.text(`Monthly Expenses: ${formatCurrency(monthlyExpenses)}`, 20, yPosition)
+    pdf.text(`Gastos del Mes: ${formatCurrency(monthlyExpenses)}`, 20, yPosition)
     yPosition += 8
-    pdf.text(`Monthly Balance: ${formatCurrency(monthlyBalance)}`, 20, yPosition)
+    pdf.text(`Balance Mensual: ${formatCurrency(monthlyBalance)}`, 20, yPosition)
     yPosition += 8
-    pdf.text(`Monthly Transactions: ${thisMonthTransactions.length}`, 20, yPosition)
+    pdf.text(`Transacciones del Mes: ${thisMonthTransactions.length}`, 20, yPosition)
     yPosition += 20
 
-    // Expenses by Category
+    // Gastos por Categoría
     if (expensesByCategory.length > 0) {
       pdf.setFontSize(16)
       pdf.setTextColor(0, 0, 0)
-      pdf.text("Expenses by Category", 20, yPosition)
+      pdf.text("Gastos por Categoría", 20, yPosition)
       yPosition += 15
 
       pdf.setFontSize(12)
@@ -480,22 +480,22 @@ export default function FinancialDashboard() {
       yPosition += 15
     }
 
-    // Recent Transactions
+    // Transacciones Recientes
     if (recentTransactions.length > 0) {
       pdf.setFontSize(16)
       pdf.setTextColor(0, 0, 0)
-      pdf.text("Recent Transactions", 20, yPosition)
+      pdf.text("Transacciones Recientes", 20, yPosition)
       yPosition += 15
 
       pdf.setFontSize(10)
-      pdf.text("Date", 20, yPosition)
-      pdf.text("Type", 60, yPosition)
-      pdf.text("Category", 90, yPosition)
-      pdf.text("Description", 130, yPosition)
-      pdf.text("Amount", 170, yPosition)
+      pdf.text("Fecha", 20, yPosition)
+      pdf.text("Tipo", 60, yPosition)
+      pdf.text("Categoría", 90, yPosition)
+      pdf.text("Descripción", 130, yPosition)
+      pdf.text("Cantidad", 170, yPosition)
       yPosition += 8
 
-      // Separator line
+      // Línea separadora
       pdf.line(20, yPosition - 2, pageWidth - 20, yPosition - 2)
       yPosition += 5
 
@@ -508,11 +508,11 @@ export default function FinancialDashboard() {
         const categoryIcon = getCategoryIcon(transaction.category, transaction.type)
 
         pdf.text(transaction.date, 20, yPosition)
-        pdf.text(transaction.type === "income" ? "Income" : "Expense", 60, yPosition)
+        pdf.text(transaction.type === "income" ? "Ingreso" : "Gasto", 60, yPosition)
         pdf.text(`${categoryIcon} ${transaction.category}`, 90, yPosition)
         pdf.text(transaction.description.substring(0, 20), 130, yPosition)
 
-        // Color for amount
+        // Color para la cantidad
         if (transaction.type === "income") {
           pdf.setTextColor(0, 150, 0)
           pdf.text(`+${formatCurrency(transaction.amount)}`, 170, yPosition)
@@ -529,12 +529,12 @@ export default function FinancialDashboard() {
     // Footer
     pdf.setFontSize(8)
     pdf.setTextColor(100, 100, 100)
-    pdf.text("Generated by FINTECH OS - Financial Control System", pageWidth / 2, pageHeight - 10, {
+    pdf.text("Generado por FINTECH OS - Sistema de Control Financiero", pageWidth / 2, pageHeight - 10, {
       align: "center",
     })
 
-    // Save PDF
-    pdf.save(`financial-report-${new Date().toISOString().split("T")[0]}.pdf`)
+    // Guardar el PDF
+    pdf.save(`reporte-financiero-${new Date().toISOString().split("T")[0]}.pdf`)
   }
 
   // Helper function for getting category icon (move this outside the component if needed)
@@ -562,7 +562,7 @@ export default function FinancialDashboard() {
               <div className="absolute inset-6 border-4 border-b-blue-500 border-t-transparent border-r-transparent border-l-transparent rounded-full animate-spin-slower"></div>
               <div className="absolute inset-8 border-4 border-l-green-500 border-t-transparent border-r-transparent border-b-transparent rounded-full animate-spin"></div>
             </div>
-            <div className="mt-4 text-cyan-500 font-mono text-sm tracking-wider">LOADING FINANCIAL SYSTEM</div>
+            <div className="mt-4 text-cyan-500 font-mono text-sm tracking-wider">CARGANDO SISTEMA FINANCIERO</div>
           </div>
         </div>
       )}
@@ -582,7 +582,7 @@ export default function FinancialDashboard() {
               <Search className="h-4 w-4 text-slate-400" />
               <input
                 type="text"
-                placeholder="Search transactions..."
+                placeholder="Buscar transacciones..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="bg-transparent border-none focus:outline-none text-sm w-40 placeholder:text-slate-500 text-slate-200"
@@ -594,12 +594,12 @@ export default function FinancialDashboard() {
                 <DialogTrigger asChild>
                   <Button className="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700">
                     <Plus className="h-4 w-4 mr-2" />
-                    New Transaction
+                    Nueva Transacción
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="bg-slate-900 border-slate-700">
                   <DialogHeader>
-                    <DialogTitle className="text-cyan-400">Add Transaction</DialogTitle>
+                    <DialogTitle className="text-cyan-400">Agregar Transacción</DialogTitle>
                   </DialogHeader>
                   <div className="space-y-4">
                     <div className="flex space-x-2">
@@ -609,7 +609,7 @@ export default function FinancialDashboard() {
                         className={transactionType === "income" ? "bg-green-600 hover:bg-green-700" : ""}
                       >
                         <TrendingUp className="h-4 w-4 mr-2" />
-                        Income
+                        Ingreso
                       </Button>
                       <Button
                         variant={transactionType === "expense" ? "default" : "outline"}
@@ -617,12 +617,12 @@ export default function FinancialDashboard() {
                         className={transactionType === "expense" ? "bg-red-600 hover:bg-red-700" : ""}
                       >
                         <TrendingDown className="h-4 w-4 mr-2" />
-                        Expense
+                        Gasto
                       </Button>
                     </div>
 
                     <div>
-                      <Label className="text-slate-200">Amount</Label>
+                      <Label className="text-slate-200">Cantidad</Label>
                       <Input
                         type="number"
                         placeholder="0.00"
@@ -633,10 +633,10 @@ export default function FinancialDashboard() {
                     </div>
 
                     <div>
-                      <Label className="text-slate-200">Category</Label>
+                      <Label className="text-slate-200">Categoría</Label>
                       <Select value={category} onValueChange={setCategory}>
                         <SelectTrigger className="bg-slate-800 border-slate-700">
-                          <SelectValue placeholder="Select category" />
+                          <SelectValue placeholder="Seleccionar categoría" />
                         </SelectTrigger>
                         <SelectContent className="bg-slate-800 border-slate-700">
                           {(transactionType === "income" ? INCOME_CATEGORIES : EXPENSE_CATEGORIES).map((cat) => (
@@ -649,9 +649,9 @@ export default function FinancialDashboard() {
                     </div>
 
                     <div>
-                      <Label className="text-slate-200">Description</Label>
+                      <Label className="text-slate-200">Descripción</Label>
                       <Input
-                        placeholder="Transaction description"
+                        placeholder="Descripción de la transacción"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         className="bg-slate-800 border-slate-700 text-slate-100 placeholder:text-slate-400"
@@ -659,7 +659,7 @@ export default function FinancialDashboard() {
                     </div>
 
                     <Button onClick={addTransaction} className="w-full bg-cyan-600 hover:bg-cyan-700">
-                      Add Transaction
+                      Agregar Transacción
                     </Button>
                   </div>
                 </DialogContent>
@@ -676,12 +676,12 @@ export default function FinancialDashboard() {
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>Notifications</p>
+                    <p>Notificaciones</p>
                   </TooltipContent>
                 </Tooltip>
-              </TooltipProvider> */}
+              </TooltipProvider>
 
-              {/* <TooltipProvider>
+              <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button
@@ -694,13 +694,13 @@ export default function FinancialDashboard() {
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>Toggle theme</p>
+                    <p>Cambiar tema</p>
                   </TooltipContent>
                 </Tooltip>
-              </TooltipProvider> */}
+              </TooltipProvider>
 
-              {/* <Avatar>
-                <AvatarImage src="/placeholder.svg?height=40&width=40" alt="User" />
+              <Avatar>
+                <AvatarImage src="/placeholder.svg?height=40&width=40" alt="Usuario" />
                 <AvatarFallback className="bg-slate-700 text-cyan-500">FU</AvatarFallback>
               </Avatar> */}
             </div>
@@ -722,33 +722,33 @@ export default function FinancialDashboard() {
                   />
                   <NavItem
                     icon={BarChart3}
-                    label="Analysis"
+                    label="Análisis"
                     active={activeSection === "analysis"}
                     onClick={() => setActiveSection("analysis")}
                   />
                   <NavItem
                     icon={Settings}
-                    label="Settings"
+                    label="Configuración"
                     active={activeSection === "settings"}
                     onClick={() => setActiveSection("settings")}
                   />
                 </nav>
 
                 <div className="mt-8 pt-6 border-t border-slate-700/50">
-                  <div className="text-xs text-slate-500 mb-2 font-mono">FINANCIAL STATUS</div>
+                  <div className="text-xs text-slate-500 mb-2 font-mono">ESTADO FINANCIERO</div>
                   <div className="space-y-3">
                     <StatusItem
-                      label="General Balance"
+                      label="Balance General"
                       value={balance > 0 ? Math.min((balance / 5000) * 100, 100) : 0}
                       color={balance >= 0 ? "green" : "red"}
                     />
                     <StatusItem
-                      label="Monthly Expenses"
+                      label="Gastos del Mes"
                       value={monthlyExpenses > 0 ? Math.min((monthlyExpenses / 2000) * 100, 100) : 0}
                       color={monthlyExpenses > 1500 ? "red" : monthlyExpenses > 1000 ? "orange" : "green"}
                     />
                     <StatusItem
-                      label="Goals"
+                      label="Objetivos"
                       value={
                         financialGoals.monthlyGoal > 0 &&
                         financialGoals.emergencyGoal > 0 &&
@@ -814,7 +814,7 @@ export default function FinancialDashboard() {
                 <CardContent className="p-0">
                   <div className="bg-gradient-to-br from-slate-800 to-slate-900 p-6 border-b border-slate-700/50">
                     <div className="text-center">
-                      <div className="text-xs text-slate-500 mb-1 font-mono">SYSTEM TIME</div>
+                      <div className="text-xs text-slate-500 mb-1 font-mono">HORA DEL SISTEMA</div>
                       <div className="text-3xl font-mono text-cyan-400 mb-1">{formatTime(currentTime)}</div>
                       <div className="text-sm text-slate-400">{formatDate(currentTime)}</div>
                     </div>
@@ -822,11 +822,11 @@ export default function FinancialDashboard() {
                   <div className="p-4">
                     <div className="grid grid-cols-2 gap-3">
                       <div className="bg-slate-800/50 rounded-md p-3 border border-slate-700/50">
-                        <div className="text-xs text-slate-500 mb-1">Transactions</div>
+                        <div className="text-xs text-slate-500 mb-1">Transacciones</div>
                         <div className="text-sm font-mono text-slate-200">{transactions.length}</div>
                       </div>
                       <div className="bg-slate-800/50 rounded-md p-3 border border-slate-700/50">
-                        <div className="text-xs text-slate-500 mb-1">This Month</div>
+                        <div className="text-xs text-slate-500 mb-1">Este Mes</div>
                         <div className="text-sm font-mono text-slate-200">{thisMonthTransactions.length}</div>
                       </div>
                     </div>
@@ -837,13 +837,13 @@ export default function FinancialDashboard() {
               {/* Quick actions */}
               <Card className="bg-slate-900/50 border-slate-700/50 backdrop-blur-sm">
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-slate-100 text-base">Quick Actions</CardTitle>
+                  <CardTitle className="text-slate-100 text-base">Acciones Rápidas</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-2 gap-3">
                     <ActionButton
                       icon={Plus}
-                      label="Income"
+                      label="Ingreso"
                       onClick={() => {
                         setTransactionType("income")
                         setIsAddTransactionOpen(true)
@@ -851,14 +851,14 @@ export default function FinancialDashboard() {
                     />
                     <ActionButton
                       icon={Minus}
-                      label="Expense"
+                      label="Gasto"
                       onClick={() => {
                         setTransactionType("expense")
                         setIsAddTransactionOpen(true)
                       }}
                     />
-                    <ActionButton icon={Calculator} label="Calculator" onClick={() => setIsCalculatorOpen(true)} />
-                    <ActionButton icon={Download} label="Export" onClick={exportToPDF} />
+                    <ActionButton icon={Calculator} label="Calculadora" onClick={() => setIsCalculatorOpen(true)} />
+                    <ActionButton icon={Download} label="Exportar" onClick={exportToPDF} />
                   </div>
                 </CardContent>
               </Card>
@@ -866,18 +866,18 @@ export default function FinancialDashboard() {
               {/* Financial goals */}
               <Card className="bg-slate-900/50 border-slate-700/50 backdrop-blur-sm">
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-slate-100 text-base">Financial Goals</CardTitle>
+                  <CardTitle className="text-slate-100 text-base">Objetivos Financieros</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
                     <div>
                       <div className="flex items-center justify-between mb-1">
-                        <div className="text-sm text-slate-400">Monthly Savings</div>
+                        <div className="text-sm text-slate-400">Ahorro Mensual</div>
                         <div className="text-xs text-cyan-400">
                           {Math.round(
                             (Math.min(monthlyBalance, financialGoals.monthlyGoal) / financialGoals.monthlyGoal) * 100,
                           )}
-                          % completed
+                          % completado
                         </div>
                       </div>
                       <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
@@ -893,13 +893,13 @@ export default function FinancialDashboard() {
 
                     <div>
                       <div className="flex items-center justify-between mb-1">
-                        <div className="text-sm text-slate-400">Emergency Fund</div>
+                        <div className="text-sm text-slate-400">Fondo de Emergencia</div>
                         <div className="text-xs text-green-400">
                           {Math.round(
                             (Math.min(balance * 0.4, financialGoals.emergencyGoal) / financialGoals.emergencyGoal) *
                               100,
                           )}
-                          % completed
+                          % completado
                         </div>
                       </div>
                       <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
@@ -915,12 +915,12 @@ export default function FinancialDashboard() {
 
                     <div>
                       <div className="flex items-center justify-between mb-1">
-                        <div className="text-sm text-slate-400">Vacation</div>
+                        <div className="text-sm text-slate-400">Vacaciones</div>
                         <div className="text-xs text-purple-400">
                           {Math.round(
                             (Math.min(balance * 0.25, financialGoals.vacationGoal) / financialGoals.vacationGoal) * 100,
                           )}
-                          % completed
+                          % completado
                         </div>
                       </div>
                       <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
@@ -942,7 +942,7 @@ export default function FinancialDashboard() {
                 <CardHeader className="pb-2">
                   <CardTitle className="text-slate-100 text-base flex items-center">
                     <AlertCircle className="mr-2 h-4 w-4 text-amber-500" />
-                    Budget Alerts
+                    Alertas de Presupuesto
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -953,8 +953,8 @@ export default function FinancialDashboard() {
                           <AlertCircle className="h-3 w-3 text-amber-500" />
                         </div>
                         <div>
-                          <div className="text-sm font-medium text-slate-200">High Expenses</div>
-                          <div className="text-xs text-slate-400">You've exceeded your monthly budget</div>
+                          <div className="text-sm font-medium text-slate-200">Gastos Elevados</div>
+                          <div className="text-xs text-slate-400">Has superado tu presupuesto mensual</div>
                         </div>
                       </div>
                     )}
@@ -965,8 +965,8 @@ export default function FinancialDashboard() {
                           <AlertCircle className="h-3 w-3 text-red-500" />
                         </div>
                         <div>
-                          <div className="text-sm font-medium text-slate-200">Negative Balance</div>
-                          <div className="text-xs text-slate-400">Your expenses exceed your income</div>
+                          <div className="text-sm font-medium text-slate-200">Balance Negativo</div>
+                          <div className="text-xs text-slate-400">Tus gastos superan tus ingresos</div>
                         </div>
                       </div>
                     )}
@@ -977,8 +977,8 @@ export default function FinancialDashboard() {
                           <AlertCircle className="h-3 w-3 text-blue-500" />
                         </div>
                         <div>
-                          <div className="text-sm font-medium text-slate-200">Get Started</div>
-                          <div className="text-xs text-slate-400">Add your first transaction</div>
+                          <div className="text-sm font-medium text-slate-200">Comenzar</div>
+                          <div className="text-xs text-slate-400">Agrega tu primera transacción</div>
                         </div>
                       </div>
                     )}
@@ -993,7 +993,7 @@ export default function FinancialDashboard() {
         <Dialog open={isCalculatorOpen} onOpenChange={setIsCalculatorOpen}>
           <DialogContent className="bg-slate-900 border-slate-700 max-w-sm">
             <DialogHeader>
-              <DialogTitle className="text-cyan-400">Calculator</DialogTitle>
+              <DialogTitle className="text-cyan-400">Calculadora</DialogTitle>
             </DialogHeader>
             <div className="space-y-4">
               <div className="bg-slate-800 rounded-lg p-4 border border-slate-700">
@@ -1165,7 +1165,7 @@ function FinancialCard({
   }
 
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-US", {
+    return new Intl.NumberFormat("es-ES", {
       style: "currency",
       currency: "USD",
     }).format(amount)
@@ -1191,7 +1191,7 @@ function MonthlyChart({ transactions, showBalance }: { transactions: Transaction
   if (!showBalance) {
     return (
       <div className="h-full w-full flex items-center justify-center">
-        <div className="text-slate-400">Data hidden</div>
+        <div className="text-slate-400">Datos ocultos</div>
       </div>
     )
   }
@@ -1259,7 +1259,7 @@ function CategoryItem({
   hidden: boolean
 }) {
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-US", {
+    return new Intl.NumberFormat("es-ES", {
       style: "currency",
       currency: "USD",
     }).format(amount)
@@ -1293,7 +1293,7 @@ function TransactionItem({
   showBalance: boolean
 }) {
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-US", {
+    return new Intl.NumberFormat("es-ES", {
       style: "currency",
       currency: "USD",
     }).format(amount)
@@ -1376,7 +1376,7 @@ function DashboardSection({
           <div className="flex items-center justify-between">
             <CardTitle className="text-slate-100 flex items-center">
               <Wallet className="mr-2 h-5 w-5 text-cyan-500" />
-              Financial Summary
+              Resumen Financiero
             </CardTitle>
             <div className="flex items-center space-x-2">
               <Button
@@ -1389,7 +1389,7 @@ function DashboardSection({
               </Button>
               <Badge variant="outline" className="bg-slate-800/50 text-cyan-400 border-cyan-500/50 text-xs">
                 <div className="h-1.5 w-1.5 rounded-full bg-cyan-500 mr-1 animate-pulse"></div>
-                LIVE
+                EN VIVO
               </Badge>
             </div>
           </div>
@@ -1397,30 +1397,30 @@ function DashboardSection({
         <CardContent className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <FinancialCard
-              title="Total Balance"
+              title="Balance Total"
               value={showBalance ? balance : 0}
               icon={DollarSign}
               trend={balance >= 0 ? "up" : "down"}
               color={balance >= 0 ? "green" : "red"}
-              detail={`${transactions.length} transactions`}
+              detail={`${transactions.length} transacciones`}
               hidden={!showBalance}
             />
             <FinancialCard
-              title="Income"
+              title="Ingresos"
               value={showBalance ? totalIncome : 0}
               icon={TrendingUp}
               trend="up"
               color="green"
-              detail={`${transactions.filter((t) => t.type === "income").length} income`}
+              detail={`${transactions.filter((t) => t.type === "income").length} ingresos`}
               hidden={!showBalance}
             />
             <FinancialCard
-              title="Expenses"
+              title="Gastos"
               value={showBalance ? totalExpenses : 0}
               icon={TrendingDown}
               trend="down"
               color="red"
-              detail={`${transactions.filter((t) => t.type === "expense").length} expenses`}
+              detail={`${transactions.filter((t) => t.type === "expense").length} gastos`}
               hidden={!showBalance}
             />
           </div>
@@ -1433,24 +1433,24 @@ function DashboardSection({
                     value="monthly"
                     className="data-[state=active]:bg-slate-700 data-[state=active]:text-cyan-400"
                   >
-                    This Month
+                    Este Mes
                   </TabsTrigger>
                   <TabsTrigger
                     value="categories"
                     className="data-[state=active]:bg-slate-700 data-[state=active]:text-cyan-400"
                   >
-                    Categories
+                    Categorías
                   </TabsTrigger>
                 </TabsList>
 
                 <div className="flex items-center space-x-2 text-xs text-slate-400">
                   <div className="flex items-center">
                     <div className="h-2 w-2 rounded-full bg-green-500 mr-1"></div>
-                    Income
+                    Ingresos
                   </div>
                   <div className="flex items-center">
                     <div className="h-2 w-2 rounded-full bg-red-500 mr-1"></div>
-                    Expenses
+                    Gastos
                   </div>
                   <div className="flex items-center">
                     <div className="h-2 w-2 rounded-full bg-cyan-500 mr-1"></div>
@@ -1462,19 +1462,19 @@ function DashboardSection({
               <TabsContent value="monthly" className="mt-0">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                   <div className="bg-slate-800/30 rounded-lg border border-slate-700/50 p-4">
-                    <div className="text-sm text-slate-400 mb-1">Monthly Income</div>
+                    <div className="text-sm text-slate-400 mb-1">Ingresos del Mes</div>
                     <div className="text-2xl font-bold text-green-400">
                       {showBalance ? formatCurrency(monthlyIncome) : "****"}
                     </div>
                   </div>
                   <div className="bg-slate-800/30 rounded-lg border border-slate-700/50 p-4">
-                    <div className="text-sm text-slate-400 mb-1">Monthly Expenses</div>
+                    <div className="text-sm text-slate-400 mb-1">Gastos del Mes</div>
                     <div className="text-2xl font-bold text-red-400">
                       {showBalance ? formatCurrency(monthlyExpenses) : "****"}
                     </div>
                   </div>
                   <div className="bg-slate-800/30 rounded-lg border border-slate-700/50 p-4">
-                    <div className="text-sm text-slate-400 mb-1">Monthly Balance</div>
+                    <div className="text-sm text-slate-400 mb-1">Balance Mensual</div>
                     <div className={`text-2xl font-bold ${monthlyBalance >= 0 ? "text-cyan-400" : "text-red-400"}`}>
                       {showBalance ? formatCurrency(monthlyBalance) : "****"}
                     </div>
@@ -1502,7 +1502,7 @@ function DashboardSection({
                         />
                       ))
                     ) : (
-                      <div className="col-span-2 text-center text-slate-400 py-8">No expenses by categories yet</div>
+                      <div className="col-span-2 text-center text-slate-400 py-8">No hay gastos por categorías aún</div>
                     )}
                   </div>
                 </div>
@@ -1517,10 +1517,10 @@ function DashboardSection({
         <CardHeader className="pb-2 flex flex-row items-center justify-between">
           <CardTitle className="text-slate-100 flex items-center text-base">
             <Activity className="mr-2 h-5 w-5 text-blue-500" />
-            {searchQuery ? `Results: "${searchQuery}"` : "Recent Transactions"}
+            {searchQuery ? `Resultados: "${searchQuery}"` : "Transacciones Recientes"}
           </CardTitle>
           <Badge variant="outline" className="bg-slate-800/50 text-blue-400 border-blue-500/50">
-            {recentTransactions.length} {searchQuery ? "found" : "transactions"}
+            {recentTransactions.length} {searchQuery ? "encontradas" : "transacciones"}
           </Badge>
         </CardHeader>
         <CardContent>
@@ -1537,8 +1537,8 @@ function DashboardSection({
             ) : (
               <div className="text-center text-slate-400 py-8">
                 {searchQuery
-                  ? `No transactions found matching "${searchQuery}"`
-                  : "No transactions yet. Add your first transaction!"}
+                  ? `No se encontraron transacciones que coincidan con "${searchQuery}"`
+                  : "No hay transacciones aún. ¡Agrega tu primera transacción!"}
               </div>
             )}
           </div>
@@ -1576,7 +1576,7 @@ function AnalysisSection({
         .reduce((sum: number, t: Transaction) => sum + t.amount, 0)
 
       monthlyData.push({
-        month: date.toLocaleDateString("en-US", { month: "short", year: "2-digit" }),
+        month: date.toLocaleDateString("es-ES", { month: "short", year: "2-digit" }),
         income,
         expenses,
         balance: income - expenses,
@@ -1613,7 +1613,7 @@ function AnalysisSection({
         .reduce((sum: number, t: Transaction) => sum + t.amount, 0)
 
       weeklyData.push({
-        week: `Week ${week + 1}`,
+        week: `Semana ${week + 1}`,
         income,
         expenses,
         balance: income - expenses,
@@ -1631,7 +1631,7 @@ function AnalysisSection({
         <CardHeader>
           <CardTitle className="text-slate-100 flex items-center">
             <BarChart3 className="mr-2 h-5 w-5 text-cyan-500" />
-            Financial Analysis
+            Análisis Financiero
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -1641,25 +1641,25 @@ function AnalysisSection({
                 value="monthly"
                 className="data-[state=active]:bg-slate-700 data-[state=active]:text-cyan-400"
               >
-                Monthly Trend
+                Tendencia Mensual
               </TabsTrigger>
               <TabsTrigger
                 value="weekly"
                 className="data-[state=active]:bg-slate-700 data-[state=active]:text-cyan-400"
               >
-                Weekly Analysis
+                Análisis Semanal
               </TabsTrigger>
               <TabsTrigger
                 value="categories"
                 className="data-[state=active]:bg-slate-700 data-[state=active]:text-cyan-400"
               >
-                Category Distribution
+                Distribución por Categorías
               </TabsTrigger>
             </TabsList>
 
             <TabsContent value="monthly" className="mt-0">
               <div className="bg-slate-800/30 rounded-lg border border-slate-700/50 p-6">
-                <h3 className="text-lg font-semibold text-slate-200 mb-4">Last 6 Months</h3>
+                <h3 className="text-lg font-semibold text-slate-200 mb-4">Últimos 6 Meses</h3>
                 <div className="h-80 w-full">
                   <MonthlyTrendChart data={monthlyData} showBalance={showBalance} />
                 </div>
@@ -1668,7 +1668,7 @@ function AnalysisSection({
 
             <TabsContent value="weekly" className="mt-0">
               <div className="bg-slate-800/30 rounded-lg border border-slate-700/50 p-6">
-                <h3 className="text-lg font-semibold text-slate-200 mb-4">Current Month Weekly Analysis</h3>
+                <h3 className="text-lg font-semibold text-slate-200 mb-4">Análisis Semanal del Mes Actual</h3>
                 <div className="h-80 w-full">
                   <WeeklyChart data={weeklyData} showBalance={showBalance} />
                 </div>
@@ -1678,13 +1678,13 @@ function AnalysisSection({
             <TabsContent value="categories" className="mt-0">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div className="bg-slate-800/30 rounded-lg border border-slate-700/50 p-6">
-                  <h3 className="text-lg font-semibold text-slate-200 mb-4">Donut Chart - Expenses</h3>
+                  <h3 className="text-lg font-semibold text-slate-200 mb-4">Gráfico Circular - Gastos</h3>
                   <div className="h-64 w-full">
                     <DonutChart data={expensesByCategory} showBalance={showBalance} />
                   </div>
                 </div>
                 <div className="bg-slate-800/30 rounded-lg border border-slate-700/50 p-6">
-                  <h3 className="text-lg font-semibold text-slate-200 mb-4">Top Categories</h3>
+                  <h3 className="text-lg font-semibold text-slate-200 mb-4">Top Categorías</h3>
                   <div className="space-y-4">
                     {expensesByCategory.slice(0, 5).map((cat: any, index: number) => (
                       <div key={cat.name} className="flex items-center justify-between">
@@ -1736,14 +1736,14 @@ function SettingsSection({ financialGoals, setFinancialGoals }: any) {
         <CardHeader>
           <CardTitle className="text-slate-100 flex items-center">
             <Settings className="mr-2 h-5 w-5 text-cyan-500" />
-            Financial Goals Configuration
+            Configuración de Objetivos Financieros
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="grid gap-6">
             <div className="space-y-4">
               <div>
-                <Label className="text-slate-200 text-base font-medium">Monthly Savings Goal</Label>
+                <Label className="text-slate-200 text-base font-medium">Objetivo de Ahorro Mensual</Label>
                 <div className="mt-2">
                   <Input
                     type="number"
@@ -1753,11 +1753,11 @@ function SettingsSection({ financialGoals, setFinancialGoals }: any) {
                     placeholder="1000"
                   />
                 </div>
-                <p className="text-sm text-slate-400 mt-1">Amount you want to save each month</p>
+                <p className="text-sm text-slate-400 mt-1">Cantidad que deseas ahorrar cada mes</p>
               </div>
 
               <div>
-                <Label className="text-slate-200 text-base font-medium">Emergency Fund</Label>
+                <Label className="text-slate-200 text-base font-medium">Fondo de Emergencia</Label>
                 <div className="mt-2">
                   <Input
                     type="number"
@@ -1767,11 +1767,11 @@ function SettingsSection({ financialGoals, setFinancialGoals }: any) {
                     placeholder="5000"
                   />
                 </div>
-                <p className="text-sm text-slate-400 mt-1">Target for your emergency fund</p>
+                <p className="text-sm text-slate-400 mt-1">Meta para tu fondo de emergencia</p>
               </div>
 
               <div>
-                <Label className="text-slate-200 text-base font-medium">Vacation Goal</Label>
+                <Label className="text-slate-200 text-base font-medium">Objetivo de Vacaciones</Label>
                 <div className="mt-2">
                   <Input
                     type="number"
@@ -1781,37 +1781,37 @@ function SettingsSection({ financialGoals, setFinancialGoals }: any) {
                     placeholder="2000"
                   />
                 </div>
-                <p className="text-sm text-slate-400 mt-1">Amount you want to save for vacation</p>
+                <p className="text-sm text-slate-400 mt-1">Cantidad que quieres ahorrar para vacaciones</p>
               </div>
             </div>
 
             <div className="flex space-x-4 pt-4 border-t border-slate-700/50">
               <Button onClick={handleSave} className="bg-cyan-600 hover:bg-cyan-700 text-white">
-                Save Changes
+                Guardar Cambios
               </Button>
               <Button
                 onClick={handleReset}
                 variant="outline"
                 className="border-slate-600 text-slate-300 hover:bg-slate-800 bg-transparent"
               >
-                Cancel
+                Cancelar
               </Button>
             </div>
           </div>
 
           <div className="bg-slate-800/30 rounded-lg border border-slate-700/50 p-4 mt-6">
-            <h4 className="text-slate-200 font-medium mb-3">Goals Preview</h4>
+            <h4 className="text-slate-200 font-medium mb-3">Vista Previa de Objetivos</h4>
             <div className="space-y-3">
               <div className="flex justify-between items-center">
-                <span className="text-slate-400">Monthly Savings:</span>
+                <span className="text-slate-400">Ahorro Mensual:</span>
                 <span className="text-cyan-400 font-semibold">${tempGoals.monthlyGoal}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-slate-400">Emergency Fund:</span>
+                <span className="text-slate-400">Fondo de Emergencia:</span>
                 <span className="text-green-400 font-semibold">${tempGoals.emergencyGoal}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-slate-400">Vacation:</span>
+                <span className="text-slate-400">Vacaciones:</span>
                 <span className="text-purple-400 font-semibold">${tempGoals.vacationGoal}</span>
               </div>
             </div>
@@ -1827,7 +1827,7 @@ function MonthlyTrendChart({ data, showBalance }: any) {
   if (!showBalance) {
     return (
       <div className="h-full w-full flex items-center justify-center">
-        <div className="text-slate-400">Data hidden</div>
+        <div className="text-slate-400">Datos ocultos</div>
       </div>
     )
   }
@@ -1835,7 +1835,7 @@ function MonthlyTrendChart({ data, showBalance }: any) {
   if (data.length === 0) {
     return (
       <div className="h-full w-full flex items-center justify-center">
-        <div className="text-slate-400">No data available</div>
+        <div className="text-slate-400">No hay datos disponibles</div>
       </div>
     )
   }
@@ -1866,7 +1866,7 @@ function MonthlyTrendChart({ data, showBalance }: any) {
                   <div
                     className="w-6 bg-gradient-to-t from-green-500 to-green-400 rounded-t-sm transition-all duration-300 group-hover:from-green-400 group-hover:to-green-300"
                     style={{ height: `${incomeHeight}%`, minHeight: month.income > 0 ? "4px" : "0px" }}
-                    title={`Income: $${month.income}`}
+                    title={`Ingresos: $${month.income}`}
                   ></div>
                   <div className="text-xs text-green-400 mt-1">${Math.round(month.income)}</div>
                 </div>
@@ -1874,7 +1874,7 @@ function MonthlyTrendChart({ data, showBalance }: any) {
                   <div
                     className="w-6 bg-gradient-to-t from-red-500 to-red-400 rounded-t-sm transition-all duration-300 group-hover:from-red-400 group-hover:to-red-300"
                     style={{ height: `${expenseHeight}%`, minHeight: month.expenses > 0 ? "4px" : "0px" }}
-                    title={`Expenses: $${month.expenses}`}
+                    title={`Gastos: $${month.expenses}`}
                   ></div>
                   <div className="text-xs text-red-400 mt-1">${Math.round(month.expenses)}</div>
                 </div>
@@ -1895,7 +1895,7 @@ function WeeklyChart({ data, showBalance }: any) {
   if (!showBalance) {
     return (
       <div className="h-full w-full flex items-center justify-center">
-        <div className="text-slate-400">Data hidden</div>
+        <div className="text-slate-400">Datos ocultos</div>
       </div>
     )
   }
@@ -1903,7 +1903,7 @@ function WeeklyChart({ data, showBalance }: any) {
   if (data.length === 0) {
     return (
       <div className="h-full w-full flex items-center justify-center">
-        <div className="text-slate-400">No data available</div>
+        <div className="text-slate-400">No hay datos disponibles</div>
       </div>
     )
   }
@@ -1934,7 +1934,7 @@ function WeeklyChart({ data, showBalance }: any) {
                   <div
                     className="w-8 bg-gradient-to-t from-green-500 to-green-400 rounded-t-sm transition-all duration-300 group-hover:from-green-400 group-hover:to-green-300"
                     style={{ height: `${incomeHeight}%`, minHeight: week.income > 0 ? "4px" : "0px" }}
-                    title={`Income: $${week.income}`}
+                    title={`Ingresos: $${week.income}`}
                   ></div>
                   <div className="text-xs text-green-400 mt-1">${Math.round(week.income)}</div>
                 </div>
@@ -1942,7 +1942,7 @@ function WeeklyChart({ data, showBalance }: any) {
                   <div
                     className="w-8 bg-gradient-to-t from-red-500 to-red-400 rounded-t-sm transition-all duration-300 group-hover:from-red-400 group-hover:to-red-300"
                     style={{ height: `${expenseHeight}%`, minHeight: week.expenses > 0 ? "4px" : "0px" }}
-                    title={`Expenses: $${week.expenses}`}
+                    title={`Gastos: $${week.expenses}`}
                   ></div>
                   <div className="text-xs text-red-400 mt-1">${Math.round(week.expenses)}</div>
                 </div>
@@ -1963,7 +1963,7 @@ function DonutChart({ data, showBalance }: any) {
   if (!showBalance || data.length === 0) {
     return (
       <div className="h-full w-full flex items-center justify-center">
-        <div className="text-slate-400">{!showBalance ? "Data hidden" : "No data available"}</div>
+        <div className="text-slate-400">{!showBalance ? "Datos ocultos" : "No hay datos disponibles"}</div>
       </div>
     )
   }
